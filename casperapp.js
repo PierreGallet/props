@@ -1,3 +1,5 @@
+var cred = require('./cred.js');
+
 var casper = require('casper').create({   
   verbose: true, 
   logLevel: 'debug',
@@ -18,65 +20,38 @@ casper.on("page.error", function(msg, trace) {
     this.echo("Page Error: " + msg, "ERROR");
 });
 
-
-var url = 'https://www.linkedin.com/';
-
-casper.start(url, function() {
+//navigate to linkedin.com and log in
+casper.start('http://linkedin.com');
+casper.wait(1000, function(){
+  casper.then(function() {
    this.echo("page loaded");
    this.test.assertExists('form#login', 'form is found');
    this.fill('form#login', { 
         ////////////////////////////////////////////////
         // Make sure to input username and pass below //
         ////////////////////////////////////////////////
-        session_key: '', 
-        session_password:  ''
+        'session_key': cred.username, 
+        'session_password': cred.password
     }, true);
+  })
 });
 
+casper.wait(1000);
 
-
+//default skills and user url to endorse for testing
 var toEndorse = ['Java', 'JavaScript', 'Software Engineering'];
+var userUrl = 'https://www.linkedin.com/in/frankbowers';
 
-
-casper.thenOpen('https://www.linkedin.com/in/frankbowers', function(status){
-  console.log(JSON.stringify(status));
-  this.echo('INSIDE LINKEDIN PAGE');
-  this.evaluate(function(toEndorse){
-    console.log(this);
-    skills = $('.endorsable');
-    console.log(skills);
-    for (var i=0; i<skills.length; i++){
-      if(toEndorse.indexOf($(skills[i]).data('endorsedItemName')) > -1){
-        $(skills[i]).find('.endorse-button')[0].click();
-        console.log('Endorsed NAME for ' + $(skills[i]).data('endorsedItemName'));
-      }
+//navigate to user url
+casper.thenOpenAndEvaluate(userUrl, function(toEndorse, userUrl){
+  var skills = $('.endorsable');
+  //if endorsables are in toEndorse list, click the endorse button
+  for (var i=0; i<skills.length; i++){
+    if(toEndorse.indexOf($(skills[i]).data('endorsedItemName')) > -1){
+      $(skills[i]).find('.endorse-button')[0].click();
+      console.log('Endorsed ' + userUrl + ' for ' + $(skills[i]).data('endorsedItemName'));
     }
-  });
-});
-
-
-
-  // this.waitForSelector($('.endorsable'), function() {
-  //   var skills = this.evaluate(function(){
-  //     return $('.endorsable');
-  //   });
-  //   this.echo(skills);
-  //   console.log(skills);
-  // });
-
-
-
-
-  // var skills = this.evalute(function(){
-  //   return $('.endorsable');
-  // });
-  // console.log(JSON.strigify(skills));
-  // for (var i=0; i<skills.length; i++){
-  //   if(toEndorse.indexOf($(skills[i]).data('endorsedItemName')) > -1){
-  //     $(skills[i]).find('.endorse-button')[0].click();
-  //     console.log('Endorsed NAME for ' + $(skills[i]).data('endorsedItemName'));
-  //   }
-  // }
-// });
+  }
+}, toEndorse, userUrl);
 
 casper.run();
