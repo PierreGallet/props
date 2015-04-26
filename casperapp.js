@@ -34,7 +34,7 @@ casper.wait(1000, function(){
   })
 });
 
-casper.wait(1000);
+casper.wait(2000);
 
 // DEFAULT URL AND TO-ENDORSE SKILLS //
 var toEndorse = ['Java', 'JavaScript', 'Software Engineering', 'D3.js'];
@@ -43,10 +43,11 @@ var userUrl = 'https://www.linkedin.com/in/frankbowers';
 // NAVIGATE TO URL AND ENDORSE //
 casper.thenOpenAndEvaluate(userUrl, function(toEndorse, userUrl){
   var skills = $('.endorsable');
+  var name = $('.full-name').text();
   for (var i=0; i<skills.length; i++){
     if(toEndorse.indexOf($(skills[i]).data('endorsedItemName')) > -1){
       $(skills[i]).find('.endorse-button')[0].click();
-      console.log('Endorsed ' + userUrl + ' for ' + $(skills[i]).data('endorsedItemName'));
+      console.log('Endorsed ' + name + ' for ' + $(skills[i]).data('endorsedItemName'));
     }
   }
 }, toEndorse, userUrl);
