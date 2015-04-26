@@ -16,3 +16,8 @@ var endorse = module.exports = function(toEndorse){
     }
   }
 }
+
+exports = {
+  logIn,
+  endorse
+};
