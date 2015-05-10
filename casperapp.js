@@ -49,7 +49,8 @@ for (var j=0; j<userUrls.length; j++){
     
     var connectionName = $('.full-name').text();
 
-    //gather buttons for all endorsable skills that match the toEndorse skills into an object
+    //This function gathers buttons for all endorsable skills that match the toEndorse skills into an object
+    //this is generalized into a function so it can be called with each recursive call to endorse
     var gatherEndorsables = function() {
       var unendorsed = {};
       var skills = $('.endorsable');
@@ -63,8 +64,10 @@ for (var j=0; j<userUrls.length; j++){
       return unendorsed;
     }
     
-    //recursive function to click endorse buttons repeatedly until they're no longer endorsable (for some reason it takes a few tries)
-    var counter = 1;
+    //This is a timed recursive function to click endorse buttons repeatedly every 3 seconds
+    //until they're no longer endorsable (for some reason it can take a few tries)
+    //The counter is currently set to try 5 times for a maximum of 15 seconds per user.
+    var counter = 0;
     function endorse(unendorsed) {
       setTimeout(function () {
         console.log('Inside endorse function...');
@@ -83,9 +86,13 @@ for (var j=0; j<userUrls.length; j++){
         }
       }, 3000)
     }
+
     endorse(gatherEndorsables()); 
 
   }, skillsToEndorse, userUrls[j]).waitFor(function(){
+    //This is a predicate function to keep track of endorsement success. It is only true
+    //if all endorsements for a URL were made, or 5 attempts to endorse were tried. The script
+    //waits for this predicate to be true in order to proceed to the next url.
     return this.getGlobal('__flag') === true;
   });
     
