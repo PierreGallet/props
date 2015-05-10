@@ -12,11 +12,13 @@
 5. Otherwise: `brew install casperjs --devel`
 6. `npm install`
 
-###Create a file named cred.js in the project directory with the following content:
+###Update cred.js in the project directory with your LinkedIn login credentials:
+
+For Example: 
 
 ```javascript
-var username = __YOUR LINKEDIN USERNAME AS A STRING__;
-var password = __YOUR LINKEDIN PASSWORD AS A STRING__;
+var username = 'zacharyrobert@example.com';
+var password = 'thisisntactuallymypassword';
 
 
 module.exports = {
