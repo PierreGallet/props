@@ -17,8 +17,8 @@
 For Example: 
 
 ```javascript
-var username = 'zacharyrobert@example.com';
-var password = 'thisisntactuallymypassword';
+var username = 'username@example.com';
+var password = 'thisismypassword';
 
 
 module.exports = {
