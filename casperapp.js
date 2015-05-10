@@ -36,9 +36,10 @@ casper.wait(1000, function(){
 });
 
 
-// DEFAULT URL AND TO-ENDORSE SKILLS //
-var skillsToEndorse = ['JavaScript', 'Javascript', 'Software Engineering', 'Node.js'];
-var userUrls = ["https://br.linkedin.com/in/elviocavalcante", "https://www.linkedin.com/in/anselrosenberg", "https://www.linkedin.com/in/bennettwmark", "https://www.linkedin.com/in/dgrundfest", "https://www.linkedin.com/in/dmsakamoto", "https://www.linkedin.com/in/dphopper", "https://www.linkedin.com/in/edoecohen", "https://www.linkedin.com/in/frankbowers", "https://www.linkedin.com/in/irfanbaqui", "https://www.linkedin.com/in/johnpizzo", "https://www.linkedin.com/in/katrinauychaco", "https://www.linkedin.com/in/kevhuang", "https://www.linkedin.com/in/melaniegin", "https://www.linkedin.com/in/mikeyao1990", "https://www.linkedin.com/in/rockytang", "https://www.linkedin.com/pub/david-trinh/6/743/a38", "https://www.linkedin.com/pub/eric-outterson/40/b68/bb4", "https://www.linkedin.com/pub/john-yeglinski/8/773/2b2", "https://www.linkedin.com/pub/joseph-lin/b1/67a/916", "https://www.linkedin.com/pub/ron-aaron-tsui/33/37/184", "https://www.linkedin.com/pub/steven-shyun/45/947/b60", "https://www.linkedin.com/pub/vincent-tam/21/a65/824", "www.linkedin.com/in/asponring", "www.linkedin.com/in/kylehilton92", "www.linkedin.com/in/vtumrukota"]
+// DEFINE URLS FOR USERS TO ENDORSE AND SKILLS TO ENDORSE //
+var userUrls = [];
+var skillsToEndorse = [];
+
 // NAVIGATE TO URLS AND ENDORSE //
 for (var j=0; j<userUrls.length; j++){
   casper.wait(2000);
