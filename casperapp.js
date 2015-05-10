@@ -9,7 +9,8 @@ var casper = require('casper').create({
     loadImages:  false,
     loadPlugins: false,
     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4'
-  }
+  },
+  waitTimeout: 15000
 });
 
 
@@ -36,9 +37,8 @@ casper.wait(1000, function(){
 
 
 // DEFAULT URL AND TO-ENDORSE SKILLS //
-var skillsToEndorse = ['JavaScript', 'Javascript', 'MongoDB', 'Software Engineering', 'Node.js', 'Backbone.js'];
-var userUrls = ['https://www.linkedin.com/pub/john-yeglinski/8/773/2b2', 'https://www.linkedin.com/in/kurtbartholomew', 'https://www.linkedin.com/in/frankbowers', 'https://www.linkedin.com/in/marktausch'];
-
+var skillsToEndorse = ['JavaScript', 'Javascript', 'Software Engineering', 'Node.js'];
+var userUrls = ["https://br.linkedin.com/in/elviocavalcante", "https://www.linkedin.com/in/anselrosenberg", "https://www.linkedin.com/in/bennettwmark", "https://www.linkedin.com/in/dgrundfest", "https://www.linkedin.com/in/dmsakamoto", "https://www.linkedin.com/in/dphopper", "https://www.linkedin.com/in/edoecohen", "https://www.linkedin.com/in/frankbowers", "https://www.linkedin.com/in/irfanbaqui", "https://www.linkedin.com/in/johnpizzo", "https://www.linkedin.com/in/katrinauychaco", "https://www.linkedin.com/in/kevhuang", "https://www.linkedin.com/in/melaniegin", "https://www.linkedin.com/in/mikeyao1990", "https://www.linkedin.com/in/rockytang", "https://www.linkedin.com/pub/david-trinh/6/743/a38", "https://www.linkedin.com/pub/eric-outterson/40/b68/bb4", "https://www.linkedin.com/pub/john-yeglinski/8/773/2b2", "https://www.linkedin.com/pub/joseph-lin/b1/67a/916", "https://www.linkedin.com/pub/ron-aaron-tsui/33/37/184", "https://www.linkedin.com/pub/steven-shyun/45/947/b60", "https://www.linkedin.com/pub/vincent-tam/21/a65/824", "www.linkedin.com/in/asponring", "www.linkedin.com/in/kylehilton92", "www.linkedin.com/in/vtumrukota"]
 // NAVIGATE TO URLS AND ENDORSE //
 for (var j=0; j<userUrls.length; j++){
   casper.wait(2000);
@@ -59,7 +59,7 @@ for (var j=0; j<userUrls.length; j++){
           unendorsed[skillName] = ($(skills[i]).find('.endorse-button')[0]);
         }
       }
-      console.log('in gather endorsables ', unendorsed);
+      console.log('Gathering endorsables...');
       return unendorsed;
     }
     
@@ -67,7 +67,7 @@ for (var j=0; j<userUrls.length; j++){
     var counter = 1;
     function endorse(unendorsed) {
       setTimeout(function () {
-        ('=========inside setTimeout endorse function====== ', unendorsed)
+        console.log('Inside endorse function...');
         for (var skill in unendorsed){
           unendorsed[skill].click(function(thing){
             console.log('=========CLICKED====== ', thing);
@@ -75,8 +75,9 @@ for (var j=0; j<userUrls.length; j++){
           delete unendorsed[skill];
         }
         counter++;
-        if (counter < 10 && Object.keys(unendorsed).length > 0) {
-          endorse(gatherEndorsables());
+        unendorsed = gatherEndorsables();
+        if (counter < 5 && Object.keys(unendorsed).length > 0) {
+          endorse(unendorsed);
         } else {
           window.__flag = true;
         }
