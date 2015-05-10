@@ -34,22 +34,61 @@ casper.wait(1000, function(){
   })
 });
 
-casper.wait(2000);
 
 // DEFAULT URL AND TO-ENDORSE SKILLS //
-var toEndorse = ['Java', 'JavaScript', 'Software Engineering', 'D3.js'];
-var userUrl = 'https://www.linkedin.com/in/frankbowers';
+var skillsToEndorse = ['JavaScript', 'Javascript', 'MongoDB', 'Software Engineering', 'Node.js', 'Backbone.js'];
+var userUrls = ['https://www.linkedin.com/pub/john-yeglinski/8/773/2b2', 'https://www.linkedin.com/in/kurtbartholomew', 'https://www.linkedin.com/in/frankbowers', 'https://www.linkedin.com/in/marktausch'];
 
-// NAVIGATE TO URL AND ENDORSE //
-casper.thenOpenAndEvaluate(userUrl, function(toEndorse, userUrl){
-  var skills = $('.endorsable');
-  var name = $('.full-name').text();
-  for (var i=0; i<skills.length; i++){
-    if(toEndorse.indexOf($(skills[i]).data('endorsedItemName')) > -1){
-      $(skills[i]).find('.endorse-button')[0].click();
-      console.log('Endorsed ' + name + ' for ' + $(skills[i]).data('endorsedItemName'));
+// NAVIGATE TO URLS AND ENDORSE //
+for (var j=0; j<userUrls.length; j++){
+  casper.wait(2000);
+  casper.thenOpen(userUrls[j], function(thing){
+    this.wait(8000);
+    window.__flag = false;
+  }).thenEvaluate(function(skillsToEndorse, userUrl){
+    
+    var connectionName = $('.full-name').text();
+
+    //gather buttons for all endorsable skills that match the toEndorse skills into an object
+    var gatherEndorsables = function() {
+      var unendorsed = {};
+      var skills = $('.endorsable');
+      for (var i=0; i<skills.length; i++){
+        var skillName = $(skills[i]).data('endorsedItemName');
+        if(skillsToEndorse.indexOf(skillName) > -1){
+          unendorsed[skillName] = ($(skills[i]).find('.endorse-button')[0]);
+        }
+      }
+      console.log('in gather endorsables ', unendorsed);
+      return unendorsed;
     }
-  }
-}, toEndorse, userUrl);
+    
+    //recursive function to click endorse buttons repeatedly until they're no longer endorsable (for some reason it takes a few tries)
+    var counter = 1;
+    function endorse(unendorsed) {
+      setTimeout(function () {
+        ('=========inside setTimeout endorse function====== ', unendorsed)
+        for (var skill in unendorsed){
+          unendorsed[skill].click(function(thing){
+            console.log('=========CLICKED====== ', thing);
+          });
+          delete unendorsed[skill];
+        }
+        counter++;
+        if (counter < 10 && Object.keys(unendorsed).length > 0) {
+          endorse(gatherEndorsables());
+        } else {
+          window.__flag = true;
+        }
+      }, 3000)
+    }
+    endorse(gatherEndorsables()); 
+
+  }, skillsToEndorse, userUrls[j]).waitFor(function(){
+    return this.getGlobal('__flag') === true;
+  });
+    
+}
+
 
 casper.run();
