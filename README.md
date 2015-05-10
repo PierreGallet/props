@@ -6,13 +6,13 @@
 To run:
 
 1. Download the repo to your computer.
-2. Navigate into the root directory.
+2. Navigate into the project directory.
 3. `brew update`
 4. If you have CasperJS: `brew upgrade casperjs`
 5. Otherwise: `brew install casperjs --devel`
 6. `npm install`
 
-Then, create a file named cred.js in the root directory with the following content:
+Then, create a file named cred.js in the project directory with the following content:
 
 ```javascript
 var username = __YOUR LINKEDIN USERNAME AS A STRING__;
