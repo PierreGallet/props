@@ -1,5 +1,8 @@
 var cred = require('./cred.js');
 
+// DEFINE URLS FOR USERS TO ENDORSE AND SKILLS TO ENDORSE //
+var userUrls = [];
+var skillsToEndorse = [];
 
 // DEFAULTS //
 var casper = require('casper').create({   
@@ -36,9 +39,6 @@ casper.wait(1000, function(){
 });
 
 
-// DEFINE URLS FOR USERS TO ENDORSE AND SKILLS TO ENDORSE //
-var userUrls = [];
-var skillsToEndorse = [];
 
 // NAVIGATE TO URLS AND ENDORSE //
 for (var j=0; j<userUrls.length; j++){
