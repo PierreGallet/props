@@ -10,7 +10,6 @@
 3. `brew update`
 4. If you have CasperJS: `brew upgrade casperjs`
 5. Otherwise: `brew install casperjs --devel`
-6. `npm install`
 
 ###Update cred.js in the project directory with your LinkedIn login credentials:
 
