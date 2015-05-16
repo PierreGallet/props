@@ -28,5 +28,4 @@ node_modules
 .lock-wscript
 
 # Credentials for testing
-cred.js
 *.DS_Store
