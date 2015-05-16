@@ -24,5 +24,4 @@ build/Release
 .lock-wscript
 
 # Credentials for testing
-cred.js
-.DS_Store
+*.DS_Store
