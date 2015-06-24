@@ -1,3 +1,5 @@
+## Props is currently out of commission due to some recent changes with Casper.js/Phantom.js. I hope to make necesarry updates in the near future, but please feel free to submit a pull-request if you feel so inclined :)
+
 # Props
 ## A script for endorsing multiple connections on LinkedIn from the command line.
 
@@ -13,7 +15,7 @@
 
 ###Update cred.js in the project directory with your LinkedIn login credentials:
 
-For Example: 
+For Example:
 
 ```javascript
 var username = 'username@example.com';
